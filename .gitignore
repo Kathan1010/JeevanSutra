@@ -58,3 +58,7 @@ uploads/
 node_modules/
 .npm/
 frontend/node_modules/
+
+# ── Mock/Test Files ──
+*.pdf
+sam_input.json
