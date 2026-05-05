@@ -255,6 +255,36 @@ function App() {
                       </div>
                     ))}
                   </nav>
+
+                  <div className="sidebar-section" style={{ marginTop: '24px', marginBottom: '12px' }}>
+                    <div className="sidebar-label">Live Parameters</div>
+                  </div>
+                  <div style={{ padding: '0 16px', fontSize: '0.85rem', color: 'var(--text-secondary)', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <span>Heart Rate</span>
+                      <strong style={{ color: 'var(--text-main)' }}>{Math.floor(Math.random() * 40) + 75} bpm</strong>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <span>Blood Pressure</span>
+                      <strong style={{ color: 'var(--text-main)' }}>{Math.floor(Math.random() * 30) + 100}/{Math.floor(Math.random() * 20) + 60}</strong>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <span>SpO2</span>
+                      <strong style={{ color: 'var(--text-main)' }}>{Math.floor(Math.random() * 6) + 93}%</strong>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <span>Temperature</span>
+                      <strong style={{ color: 'var(--text-main)' }}>{(36.5 + Math.random() * 2.2).toFixed(1)} °C</strong>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <span>Resp Rate</span>
+                      <strong style={{ color: 'var(--text-main)' }}>{Math.floor(Math.random() * 12) + 14} /min</strong>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <span>Urine Output</span>
+                      <strong style={{ color: 'var(--text-main)' }}>{Math.floor(Math.random() * 30) + 40} mL/hr</strong>
+                    </div>
+                  </div>
                 </>
               )}
 
