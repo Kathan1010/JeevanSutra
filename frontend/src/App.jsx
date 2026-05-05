@@ -296,7 +296,7 @@ function App() {
 
             /* ── STAFF VIEWS ── */
             ) : currentUser.role === 'staff' ? (
-              <StaffViews activeNav={activeNav} />
+              <StaffViews activeNav={activeNav} currentUser={currentUser} />
 
             /* ── DOCTOR CLINICAL VIEWS ── */
             ) : (

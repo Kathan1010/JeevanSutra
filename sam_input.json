@@ -1,0 +1,65 @@
+{
+  "patient": {
+    "name": "Sam",
+    "patient_id": "sam-987654321",
+    "bed_number": "ICU-S1",
+    "status": "admitted"
+  },
+  "report": {
+    "rule_facts": {
+      "sofa": {
+        "total": 6,
+        "sepsis_criteria_met": true,
+        "organ_scores": {
+          "respiration": 2,
+          "coagulation": 1,
+          "liver": 0,
+          "cardiovascular": 2,
+          "cns": 0,
+          "renal": 1
+        },
+        "organ_failures": [
+          "cardiovascular"
+        ]
+      },
+      "qsofa": {
+        "total": 2,
+        "high_risk": true
+      },
+      "sirs": {
+        "total": 3
+      },
+      "aki": {
+        "stage": 1,
+        "trigger": "creatinine",
+        "details": "Creatinine increased above baseline"
+      },
+      "vwrs": {
+        "overall": "Not Ready",
+        "score": 2,
+        "blocking_reasons": [
+          "High Vasopressor Support",
+          "High FiO2"
+        ]
+      },
+      "amr": [
+        {
+          "organism": "MRSA",
+          "severity": "High",
+          "resistant_to": [
+            "Methicillin",
+            "Oxacillin"
+          ],
+          "recommended": [
+            "Vancomycin",
+            "Linezolid"
+          ]
+        }
+      ],
+      "outliers": []
+    },
+    "ai_narrative": "Patient Sam is currently admitted to the ICU and presents with signs of sepsis. The SOFA score is elevated primarily due to respiratory and cardiovascular components. MRSA has been detected, requiring Vancomycin or Linezolid. The patient is currently not ready for ventilator weaning due to high vasopressor requirements.",
+    "diagnosis_blocked": false,
+    "rule_version": "v2.1.0"
+  }
+}

@@ -1,30 +1,55 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { User, Shield, Award, Calendar, CheckCircle, Clock } from 'lucide-react';
 
-export default function StaffProfile() {
-  // Mock data for the currently logged in staff member
+export default function StaffProfile({ currentUser }) {
+  const [patients, setPatients] = useState([]);
+  const [randomizedData, setRandomizedData] = useState(null);
+
+  useEffect(() => {
+    // Fetch patients to build a realistic roster
+    fetch('http://localhost:8000/api/patients')
+      .then(res => res.json())
+      .then(data => {
+        const list = Array.isArray(data) ? data : [];
+        setPatients(list);
+        
+        // Generate random data
+        const shuffled = [...list].sort(() => 0.5 - Math.random());
+        const roster = shuffled.slice(0, 3).map(p => ({
+          bed: p.bed_number || 'ICU-B?',
+          patient: p.name,
+          status: Math.random() > 0.5 ? 'Stable' : 'Critical'
+        }));
+        
+        const handovers = shuffled.slice(0, 2).map((p, i) => ({
+          date: i === 0 ? 'Today, 07:45' : 'Yesterday, 19:50',
+          type: i === 0 ? 'Received' : 'Generated',
+          from: 'Nurse M.',
+          to: 'Nurse M.',
+          patient: p.name
+        }));
+
+        setRandomizedData({ currentRoster: roster, handoverLog: handovers });
+      })
+      .catch(err => console.error(err));
+  }, []);
+
+  // Use currentUser details from database, fallback for others
   const profile = {
-    name: 'Sarah Jenkins',
-    role: 'Senior ICU Nurse',
-    employeeId: 'RN-98234-JS',
+    name: currentUser?.display_name || 'Staff Member',
+    role: currentUser?.role === 'staff' ? 'Senior ICU Nurse' : 'ICU Doctor',
+    employeeId: currentUser?.identifier ? `EMP-${currentUser.identifier.toUpperCase()}` : 'RN-98234-JS',
     department: 'Intensive Care Unit (ICU)',
-    license: 'RN-88392110-TX',
-    aclsRenewal: '2027-04-15',
-    blsRenewal: '2026-11-20',
-    currentRoster: [
-      { bed: 'ICU-B12', patient: 'Patient A', status: 'Stable' },
-      { bed: 'ICU-B14', patient: 'Patient B', status: 'Critical' },
-      { bed: 'ICU-B15', patient: 'Patient C', status: 'Observation' }
-    ],
+    license: `RN-${Math.floor(Math.random() * 80000000) + 10000000}-TX`,
+    aclsRenewal: `202${Math.floor(Math.random() * 5) + 4}-0${Math.floor(Math.random() * 9) + 1}-15`,
+    blsRenewal: `202${Math.floor(Math.random() * 3) + 4}-11-20`,
+    currentRoster: randomizedData?.currentRoster || [],
     upcomingShifts: [
       { date: 'Today', time: '08:00 - 20:00' },
       { date: 'Tomorrow', time: '08:00 - 20:00' },
       { date: 'Thursday', time: 'Off' }
     ],
-    handoverLog: [
-      { date: 'Today, 07:45', type: 'Received', from: 'Nurse M.', patient: 'Patient B' },
-      { date: 'Yesterday, 19:50', type: 'Generated', to: 'Nurse M.', patient: 'Patient C' }
-    ]
+    handoverLog: randomizedData?.handoverLog || []
   };
 
   return (

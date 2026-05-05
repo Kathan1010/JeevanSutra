@@ -9,7 +9,7 @@ import PatientHistory from './PatientHistory';
 import ShiftHandover from './ShiftHandover';
 import StaffProfile from './StaffProfile';
 
-export default function StaffViews({ activeNav }) {
+export default function StaffViews({ activeNav, currentUser }) {
   switch (activeNav) {
     case 'patient-add':
       return <AddPatient />;
@@ -22,7 +22,7 @@ export default function StaffViews({ activeNav }) {
     case 'handover':
       return <ShiftHandover />;
     case 'staff-profile':
-      return <StaffProfile />;
+      return <StaffProfile currentUser={currentUser} />;
     default:
       return (
         <div className="empty-state">
