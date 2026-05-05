@@ -302,7 +302,6 @@ export default function LandingPage({ onNavigateLogin }) {
           <a href="#contact" onClick={(e) => { e.preventDefault(); contactRef.current?.scrollIntoView({ behavior: 'smooth' }) }}>Contact</a>
         </div>
         <div className="lp-nav-auth">
-          <button className="lp-btn-ghost" onClick={onNavigateLogin}>Sign In</button>
           <button className="lp-btn-primary" onClick={onNavigateLogin}>Log In</button>
         </div>
       </nav>
