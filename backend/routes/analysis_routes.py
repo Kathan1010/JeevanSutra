@@ -48,14 +48,14 @@ async def analyze_patient(patient_id: str):
     # 4. Creatinine history for AKI
     creatinine_history = lab_history.get("creatinine", [])
 
-    # 5. Fetch clinical notes
+    # 5. Fetch clinical notes (from all recent raw_data since PDFs contain notes)
     notes_res = sb.table("raw_data").select("*").eq(
         "patient_id", patient_id
-    ).in_("data_type", ["note", "culture"]).order("uploaded_at", desc=True).limit(10).execute()
+    ).order("uploaded_at", desc=True).limit(5).execute()
 
     clinical_notes = [
         {"text": n.get("raw_content", ""), "source": f"{n['data_type']} from {n['uploaded_at']}"}
-        for n in (notes_res.data or [])
+        for n in (notes_res.data or []) if n.get("raw_content")
     ]
 
     # 6. Build patient data for pipeline

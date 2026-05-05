@@ -67,7 +67,7 @@ class ClinicalScoring:
         organ_scores["liver"] = self._score_range(bil, sofa_config["liver"]) if bil else 0
 
         # CNS
-        gcs = vitals.get("gcs")
+        gcs = vitals.get("gcs_total")
         organ_scores["cns"] = self._score_range(gcs, sofa_config["cns"]) if gcs else 0
 
         # Renal
@@ -76,7 +76,7 @@ class ClinicalScoring:
 
         # Cardiovascular
         on_vaso = vitals.get("on_vasopressors", False)
-        map_val = vitals.get("map", 70)
+        map_val = vitals.get("mean_arterial_pressure", 70)
         dose = vitals.get("vasopressor_dose", 0)
         if on_vaso:
             organ_scores["cardiovascular"] = 4 if dose > 15 else (3 if dose > 5 else 2)
@@ -98,7 +98,7 @@ class ClinicalScoring:
         criteria = {
             "respiratory_rate": vitals.get("respiratory_rate", 0) >= qc["respiratory_rate_threshold"],
             "systolic_bp": vitals.get("systolic_bp", 120) <= qc["systolic_bp_threshold"],
-            "altered_mentation": vitals.get("gcs", 15) < qc["gcs_threshold"],
+            "altered_mentation": vitals.get("gcs_total", 15) < qc["gcs_threshold"],
         }
         total = sum(1 for v in criteria.values() if v)
         return qSOFAResult(total=total, high_risk=(total >= 2), criteria=criteria, rule_version=rule_version)
